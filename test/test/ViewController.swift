@@ -34,6 +34,14 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    private func configureTextFields(){
+        txt1.delegate = self
+        txt2.delegate = self
+        txt3.delegate = self
+        txt4.delegate = self
+    }
+    
+//    dismiss keyboard
     private func configureTapGesture(){
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ViewController.handleTap))
         view.addGestureRecognizer(tapGesture)
@@ -41,13 +49,7 @@ class ViewController: UIViewController {
     @objc func handleTap(){
         view.endEditing(true)
     }
-    
-    private func configureTextFields(){
-        txt1.delegate = self
-        txt2.delegate = self
-        txt3.delegate = self
-        txt4.delegate = self
-    }
+
     
     @IBAction func addVehicle(_ sender: Any) {
         //verify textFields
@@ -81,16 +83,31 @@ class ViewController: UIViewController {
     }
     
     @IBAction func listVehicle(_ sender: Any) {
-        department1.List()
         
+        department1.List()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        var destViewController : ViewList = segue.destination as! ViewList
-        
-        
+        let destViewController : ViewList = segue.destination as! ViewList
+
         destViewController.labelTxt = String(department1.vehicles[0].ID)
     }
+    
+    override func shouldPerformSegue(withIdentifier identifier: String?, sender: Any?) -> Bool {
+        if let ident = identifier {
+            if ident == "List" {
+                if department1.vehicles.capacity <= 0{
+                    let alert = UIAlertController(title: "Alert", message: "No Vehicles", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alert, animated: true)
+                    
+                    return false
+                }
+            }
+        }
+        return true
+    }
+    
 }
 
 extension ViewController: UITextFieldDelegate{
