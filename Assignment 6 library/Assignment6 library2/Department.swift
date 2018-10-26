@@ -37,9 +37,13 @@ class Department {
         for v in vehicles{
             switch search {
             case "type":
-                if v.type.caseInsensitiveCompare(str) == .orderedSame{
+//                if v.type.contains(str){print("contains")}
+                if v.type.range(of: str, options: .caseInsensitive) != nil{
                     vehiclesArray.append(v)
                 }
+//                if v.type.caseInsensitiveCompare(str) == .orderedSame{
+//                    vehiclesArray.append(v)
+//                }
             case "year":
                 let dateformatter = DateFormatter()
                 dateformatter.dateFormat = "yyyy"

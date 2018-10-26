@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITextFieldDelegate, UITe
     var btn2 = UIButton()
     var btn3 = UIButton()
     var textView = UITextView()
-    var searchView = UITextView()
+    var searchTextView = UITextView()
     var backbtn = UIButton()
   
     let department1 = Department("Sales","510-679-7777")
@@ -72,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITextFieldDelegate, UITe
     func createButton(_ num: Int) -> UIButton{
         var size = num
         if num == 3{size = 1}
-        let btn:UIButton = UIButton(frame: CGRect(x: 0 + 100*Double(size), y: 500, width: 80, height: 40))
+        let btn:UIButton = UIButton(frame: CGRect(x: 20 + 100*Double(size), y: 500, width: 80, height: 40))
         switch num{
         case 0: btn.setTitle("Add", for: .normal)
                     btn.addTarget(self, action:#selector(buttonAction), for: .touchUpInside)
@@ -95,44 +95,54 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITextFieldDelegate, UITe
     
 //    "Add" Button
     @objc func buttonAction(sender: UIButton!){
+        let alert = UIAlertController(title: "Alert", message: "Please check your typing", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         //verify textFields
-        if !textField1.text!.isAlpha(ignoreDiacritics: true) {
-            print("Please enter valid name")
-            return
-        }
-        guard textField8.text!.characters.count == 4 else{return}
+        if !textField1.text!.isAlpha(ignoreDiacritics: true) { alert.show(); return}
+        if !textField3.text!.isAlpha(ignoreDiacritics: true) { alert.show(); return}
+        if !textField4.text!.isAlpha(ignoreDiacritics: true) { alert.show(); return}
+        if !textField7.text!.isAlpha(ignoreDiacritics: true) { alert.show(); return}
+        guard textField8.text!.characters.count == 4 else{alert.show(); return}
+
+        guard let d2 = Double(textField2.text!) else{alert.show(); return}
+        guard let d5 = Double(textField5.text!) else{alert.show(); return}
+//        let d5 = NSString(string: textField5.text!).doubleValue
+        guard let i6 = Int(textField6.text!) else{alert.show(); return}
         
         let dateformatter = DateFormatter()
         var str1 = "2016"
         dateformatter.dateFormat = "yyyy"
         
-        let date1 = dateformatter.date(from: textField8.text!)
+        let year = dateformatter.date(from: textField8.text!)
         
-        let d2 = NSString(string: textField2.text!).doubleValue
-        let d5 = NSString(string: textField5.text!).doubleValue
-        let i6 = Int(textField6.text!)
-        
-        let vehicle1 = Vehicle(textField1.text!, d2, textField3.text!, textField4.text!, d5, i6!, textField7.text!, date1!)
+        let vehicle1 = Vehicle(textField1.text!, d2, textField3.text!, textField4.text!, d5, i6, textField7.text!, year!)
         
         department1.Add(vehicle: vehicle1)
-        textField1.text = ""
-        textField2.text = ""
-        textField3.text = ""
-        textField4.text = ""
-        textField5.text = ""
-        textField6.text = ""
-        textField7.text = ""
-        textField8.text = ""
+//        textField1.text = ""
+//        textField2.text = ""
+//        textField3.text = ""
+//        textField4.text = ""
+//        textField5.text = ""
+//        textField6.text = ""
+//        textField7.text = ""
+//        textField8.text = ""
     }
 //    "List" Button
     @objc func buttonAction1(sender: UIButton!){
         let vehicles = department1.List()
 
-        textView = UITextView(frame: CGRect(x:0,y:0,width:400, height:600))
+        textView = UITextView(frame: CGRect(x:0,y:0,width:400, height:550))
+        textView.backgroundColor = .yellow
         textView.tag = 1
+        textView.isScrollEnabled = true
         textView.delegate = self
         for v in vehicles{
-            let str = "\(v.make),\(v.miles),\(v.model),\(v.photo),\(v.price),\(v.rating),\(v.type),\(v.year)\n"
+            let dateformatter = DateFormatter()
+            dateformatter.dateFormat = "yyyy"
+            let year = dateformatter.string(from: v.year)
+            
+            
+            let str = "Make: \(v.make)\n Miles: \(v.miles)\n Model: \(v.model)\n Photo: \(v.photo)\n Price: \(v.price)\n Rating: \(v.rating)\n Type: \(v.type)\n Year: \(year)\n\n"
             textView.text.append(str)
         }
         
@@ -145,18 +155,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITextFieldDelegate, UITe
     }
 //    "Search" Button
     @objc func buttonAction2(sender: UIButton!){
-        searchView = UITextView(frame: CGRect(x:0,y:0,width:400, height:600))
-        searchView.tag = 1
+        let searchView = UITextView(frame: CGRect(x:0,y:0,width:400, height:600))
+        searchView.tag = 5
         searchView.delegate = self
         view.addSubview(searchView)
         
-        searchTxtField = UITextField(frame: CGRect(x:50.0, y:50, width:200.0, height:30.0))
+        searchTextView = UITextView(frame: CGRect(x:0,y:0,width:400, height:400))
+        searchTextView.tag = 1
+        searchTextView.delegate = self
+        view.addSubview(searchTextView)
+  
+        searchTxtField = UITextField(frame: CGRect(x:50.0, y:400, width:200.0, height:30.0))
         searchTxtField.placeholder = "Type(String)orYear(YYYY)"
+        searchTxtField.borderStyle = .line
         searchTxtField.delegate = self
         searchTxtField.tag = 3
         view.addSubview(searchTxtField)
         
-        let searchbtn:UIButton = UIButton(frame: CGRect(x:100, y: 400, width: 80, height: 40))
+        let searchbtn:UIButton = UIButton(frame: CGRect(x:120, y: 450, width: 80, height: 40))
         searchbtn.setTitle("Go", for: .normal)
         searchbtn.addTarget(self, action:#selector(buttonAction4), for: .touchUpInside)
         searchbtn.tag = 4
@@ -171,49 +187,64 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITextFieldDelegate, UITe
     }
 //    "Back" Button
     @objc func buttonAction3(sender: UIButton!){
-        if let viewWithTag = view.viewWithTag(1){
-            viewWithTag.removeFromSuperview()
-        }
-        if let viewWithTag = view.viewWithTag(2){
-            viewWithTag.removeFromSuperview()
-        }
-        if let viewWithTag = view.viewWithTag(3){
-            viewWithTag.removeFromSuperview()
-        }
-        if let viewWithTag = view.viewWithTag(4){
-            viewWithTag.removeFromSuperview()
+//        for view in view.subviews{
+//            view.removeFromSuperview()
+//        }
+        for n in [1,2,3,4,5,]{
+            if let viewWithTag = view.viewWithTag(n){
+                viewWithTag.removeFromSuperview()
+            }
         }
     }
 //    "Go" Button
     @objc func buttonAction4(sender: UIButton!){
+        searchTextView.text.removeAll()
+        
+        let alert = UIAlertController(title: "Alert", message: "Please enter something", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        let alert2 = UIAlertController(title: "Alert", message: "Please enter valid search type", preferredStyle: UIAlertControllerStyle.alert)
+        alert2.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        let alert3 = UIAlertController(title: "Alert", message: "Please enter valid year", preferredStyle: UIAlertControllerStyle.alert)
+        alert3.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        
         guard let txt = searchTxtField.text, !txt.isEmpty else{
-            print("Please enter something")
+            alert.show()
             return
         }
         if !searchTxtField.text!.isAlphaNum(ignoreDiacritics: true) {
-            print("Please enter valid search type")
+            alert2.show()
             return
         }
         if let searchType: Int = Int(searchTxtField.text ?? "0"){
-            guard searchTxtField.text!.characters.count == 4 else{return}
+            guard searchTxtField.text!.characters.count == 4 else{alert3.show();return}
             if let vehicles = department1.Search(search: "year", str: searchTxtField.text!){
                 for v in vehicles{
-                    let str = "\(v.make),\(v.miles),\(v.model),\(v.photo),\(v.price),\(v.rating),\(v.type),\(v.year)\n"
-                    searchView.text.append(str)
+                    let dateformatter = DateFormatter()
+                    dateformatter.dateFormat = "yyyy"
+                    let year = dateformatter.string(from: v.year)
+             
+                    let str = "Make: \(v.make)\n Miles: \(v.miles)\n Model: \(v.model)\n Photo: \(v.photo)\n Price: \(v.price)\n Rating: \(v.rating)\n Type: \(v.type)\n Year: \(year)\n\n"
+                    searchTextView.text.append(str)
                 }
             }
         }
         else {
             if let vehicles = department1.Search(search: "type", str: searchTxtField.text!){
                 for v in vehicles{
-                    let str = "\(v.make),\(v.miles),\(v.model),\(v.photo),\(v.price),\(v.rating),\(v.type),\(v.year)\n"
-                    searchView.text.append(str)
+                    let dateformatter = DateFormatter()
+                    dateformatter.dateFormat = "yyyy"
+                    let year = dateformatter.string(from: v.year)
+                    
+                    
+                    let str = "Make: \(v.make)\n Miles: \(v.miles)\n Model: \(v.model)\n Photo: \(v.photo)\n Price: \(v.price)\n Rating: \(v.rating)\n Type: \(v.type)\n Year: \(year)\n\n"
+                    searchTextView.text.append(str)
                 }
             }
         }
         
         
     }
+    
     
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -225,7 +256,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITextFieldDelegate, UITe
             window.rootViewController = UIViewController()
             window.makeKeyAndVisible()
         }
-        let viewRect: CGRect = CGRect(x:20,y:20,width:400, height:600);
+        let viewRect: CGRect = CGRect(x:0,y:20,width:400, height:600);
         view = UIView(frame:viewRect)
         window?.addSubview(view); // window is coming soon
         
@@ -296,6 +327,18 @@ extension String{
         else {
             return self.isAlpha()
         }
+    }
+}
+
+public extension UIAlertController {
+    func show() {
+        let win = UIWindow(frame: UIScreen.main.bounds)
+        let vc = UIViewController()
+        vc.view.backgroundColor = .clear
+        win.rootViewController = vc
+        win.windowLevel = UIWindowLevelAlert + 1
+        win.makeKeyAndVisible()
+        vc.present(self, animated: true, completion: nil)
     }
 }
 
