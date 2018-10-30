@@ -27,13 +27,19 @@ class Department {
         
     }
     
-    func List () {
-        let dateformatter = DateFormatter()
-        dateformatter.dateFormat = "yyyy"
+    func List()-> String {
+        var vehiclesList: String = ""
+        
         for v in vehicles{
+            let dateformatter = DateFormatter()
+            dateformatter.dateFormat = "yyyy"
             let year = dateformatter.string(from: v.year)
-            print("Make: \(v.make)", "Miles: \(v.miles)","Model: \(v.model)","Photo: \(v.photo)", "Price: \(v.price)", "Rating: \(v.rating)","Type: \(v.type)","Year: \(year)")
+            
+            
+            let str = "Make: \(v.make)\n Miles: \(v.miles)\n Model: \(v.model)\n Photo: \(v.photo)\n Price: \(v.price)\n Rating: \(v.rating)\n Type: \(v.type)\n Year: \(year)\n\n"
+            vehiclesList.append(str)
         }
+        return vehiclesList
     }
     
     func Search (search: String, str: String) -> [Vehicle]? {
@@ -42,9 +48,13 @@ class Department {
         for v in vehicles{
             switch search {
             case "type":
-                if v.type.caseInsensitiveCompare(str) == .orderedSame{
+                //                if v.type.contains(str){print("contains")}
+                if v.type.range(of: str, options: .caseInsensitive) != nil{
                     vehiclesArray.append(v)
                 }
+                //                if v.type.caseInsensitiveCompare(str) == .orderedSame{
+                //                    vehiclesArray.append(v)
+            //                }
             case "year":
                 let dateformatter = DateFormatter()
                 dateformatter.dateFormat = "yyyy"

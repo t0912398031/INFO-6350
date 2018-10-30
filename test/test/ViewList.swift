@@ -11,12 +11,16 @@ import UIKit
 
 class ViewList : UIViewController{
     
-    @IBOutlet weak var txt1: UILabel!
+    var department: Department!
+    @IBOutlet weak var txtView: UITextView!
+    var viewTxt = String()
     
-    var labelTxt = String()
     override func viewDidLoad() {
-        txt1.text = labelTxt
+//        txtView.text = viewTxt
         
+        let vehicles = department.List()
+        txtView.text = vehicles
     }
+    
     
 }
