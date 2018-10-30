@@ -106,7 +106,7 @@ class ViewController: UIViewController {
     
     @IBAction func listVehicle(_ sender: Any) {
         
-        department1.List()
+//        department1.List()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
