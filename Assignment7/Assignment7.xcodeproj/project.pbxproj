@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1AD506BB218E8CE8008ED47B /* ListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1AD506BA218E8CE8008ED47B /* ListViewController.xib */; };
+		1AD506BD218E91F9008ED47B /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD506BC218E91F9008ED47B /* ListViewController.swift */; };
 		6C5C25DD217F93B6004E2353 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5C25DC217F93B6004E2353 /* AppDelegate.swift */; };
 		6C5C25DF217F93B6004E2353 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5C25DE217F93B6004E2353 /* ViewController.swift */; };
 		6C5C25E2217F93B6004E2353 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C5C25E0217F93B6004E2353 /* Main.storyboard */; };
@@ -31,6 +33,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1AD506BA218E8CE8008ED47B /* ListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListViewController.xib; sourceTree = "<group>"; };
+		1AD506BC218E91F9008ED47B /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		6C5C25D9217F93B6004E2353 /* Assignment7.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Assignment7.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C5C25DC217F93B6004E2353 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6C5C25DE217F93B6004E2353 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -92,8 +96,10 @@
 				6C5C25DC217F93B6004E2353 /* AppDelegate.swift */,
 				6C5C25DE217F93B6004E2353 /* ViewController.swift */,
 				6C5C2606217FCAA9004E2353 /* ViewList.swift */,
+				1AD506BC218E91F9008ED47B /* ListViewController.swift */,
 				6CFAE1D22189037800FA0C41 /* ViewSearch.swift */,
 				6C5C25E0217F93B6004E2353 /* Main.storyboard */,
+				1AD506BA218E8CE8008ED47B /* ListViewController.xib */,
 				6C5C25E3217F93B6004E2353 /* Assets.xcassets */,
 				6C5C25E5217F93B6004E2353 /* LaunchScreen.storyboard */,
 				6C5C25E8217F93B6004E2353 /* Info.plist */,
@@ -196,6 +202,7 @@
 			files = (
 				6C5C25E7217F93B6004E2353 /* LaunchScreen.storyboard in Resources */,
 				6C5C25E4217F93B6004E2353 /* Assets.xcassets in Resources */,
+				1AD506BB218E8CE8008ED47B /* ListViewController.xib in Resources */,
 				6C5C25E2217F93B6004E2353 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -220,6 +227,7 @@
 				6C5C25DD217F93B6004E2353 /* AppDelegate.swift in Sources */,
 				6C5C2601217F95E4004E2353 /* Department.swift in Sources */,
 				6C5C2605217FAF41004E2353 /* configureBusiness.swift in Sources */,
+				1AD506BD218E91F9008ED47B /* ListViewController.swift in Sources */,
 				6CFAE1D32189037800FA0C41 /* ViewSearch.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

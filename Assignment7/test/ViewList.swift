@@ -12,6 +12,7 @@ import UIKit
 class ViewList : UIViewController{
     
     var department: Department!
+
     @IBOutlet weak var txtView: UITextView!
     var viewTxt = String()
     

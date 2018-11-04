@@ -104,10 +104,14 @@ class ViewController: UIViewController {
         txt8.text = ""
     }
     
-    @IBAction func listVehicle(_ sender: Any) {
+    @IBAction func listVehicle(_ sender: UIButton) {
+        let vc = ViewList(nibName: "ListViewController", bundle: nil)
+        vc.department = department1
+        vc.modalTransitionStyle = .flipHorizontal
+        self.present(vc, animated: true, completion: nil)
         
-//        department1.List()
     }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "List"){
