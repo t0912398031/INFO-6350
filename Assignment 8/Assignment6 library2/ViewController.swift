@@ -306,8 +306,6 @@ class MyCell: UITableViewCell{
 //        actionButton.addTarget(self, action: "Action", for: .touchUpInside)
 //        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[message]-|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": actionButton]));
     }
-    func Action(){
-//        myTableViewController.deleteCell(self)
-    }
+
 }
 

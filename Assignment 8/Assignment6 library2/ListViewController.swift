@@ -22,7 +22,7 @@ class ListViewController: UIViewController, UITextFieldDelegate {
     
     func createTextField(_ num: Int) -> UITextField {
         
-        let textField = UITextField(frame: CGRect(x:100.0, y:100+Double(num)*50, width:200.0, height:30.0))
+        let textField = UITextField(frame: CGRect(x:100.0, y:50+Double(num)*50, width:200.0, height:30.0))
         textField.textAlignment = NSTextAlignment.center
         textField.textColor = UIColor.blue
         textField.backgroundColor = UIColor.white
@@ -82,16 +82,16 @@ class ListViewController: UIViewController, UITextFieldDelegate {
         let vehicle1 = Vehicle(textField1.text!, d2, textField3.text!, textField4.text!, d5, i6, textField7.text!, year!)
         
         department.Add(vehicle: vehicle1)
-        //        textField1.text = ""
-        //        textField2.text = ""
-        //        textField3.text = ""
-        //        textField4.text = ""
-        //        textField5.text = ""
-        //        textField6.text = ""
-        //        textField7.text = ""
-        //        textField8.text = ""
+                textField1.text = ""
+                textField2.text = ""
+                textField3.text = ""
+                textField4.text = ""
+                textField5.text = ""
+                textField6.text = ""
+                textField7.text = ""
+                textField8.text = ""
         let objVC: ViewController? = ViewController(nibName: nil, bundle: nil)
-        
+
         objVC?.vehicles = department.vehicles
         print(department.vehicles.count)
 //        objVC?.myTableView.reloadData()
@@ -99,6 +99,7 @@ class ListViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "Add Vehicle"
         view.backgroundColor = .gray
         // Do any additional setup after loading the view.
         
@@ -121,7 +122,7 @@ class ListViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(textField7)
         view.addSubview(textField8)
         
-        let btn:UIButton = UIButton(frame: CGRect(x: 150, y: 600, width: 80, height: 40))
+        let btn:UIButton = UIButton(frame: CGRect(x: 150, y: 500, width: 80, height: 40))
         btn.setTitle("Add", for: .normal)
         btn.layer.cornerRadius = 5.0
         btn.layer.borderColor = UIColor.white.cgColor
