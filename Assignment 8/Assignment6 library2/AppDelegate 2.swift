@@ -291,19 +291,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITextFieldDelegate, UITe
 //        let viewController = ViewController(nibName: nil, bundle: nil) //ViewController = Name of your controller
 //        let navigationController = UINavigationController(rootViewController: viewController)
 //        window?.rootViewController = navigationController
-  
+
+        
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        let nav1 = UINavigationController()
-        let mainView = ViewController(nibName: nil, bundle: nil) //ViewController = Name of your controller
-        nav1.viewControllers = [mainView]
-        
-        if let window = window {
-            window.backgroundColor = UIColor.white
-            window.rootViewController = nav1
-            window.makeKeyAndVisible()
-        }
-
+//        let nav1 = UINavigationController()
+//        let mainView = ViewController(nibName: nil, bundle: nil) //ViewController = Name of your controller
+//        nav1.viewControllers = [mainView]
+//
+//        if let window = window {
+//            window.backgroundColor = UIColor.white
+//            window.rootViewController = nav1
+//            window.makeKeyAndVisible()
+//        }
+        window?.rootViewController = UINavigationController(rootViewController: ViewController())
 
 //        textField1 = createTextField(1)
 //        textField2 = createTextField(2)

@@ -22,7 +22,7 @@ class ListViewController: UIViewController, UITextFieldDelegate {
     
     func createTextField(_ num: Int) -> UITextField {
         
-        let textField = UITextField(frame: CGRect(x:50.0, y:50+Double(num)*50, width:200.0, height:30.0))
+        let textField = UITextField(frame: CGRect(x:100.0, y:100+Double(num)*50, width:200.0, height:30.0))
         textField.textAlignment = NSTextAlignment.center
         textField.textColor = UIColor.blue
         textField.backgroundColor = UIColor.white
@@ -47,6 +47,14 @@ class ListViewController: UIViewController, UITextFieldDelegate {
         textField.delegate = self
         
         return textField
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // called when 'return' key pressed. return NO to ignore.
+        textField.resignFirstResponder()
+        return true
+    }
+    private func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        return false
     }
     
     //    "Add" Button
@@ -91,7 +99,7 @@ class ListViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .green
+        view.backgroundColor = .gray
         // Do any additional setup after loading the view.
         
         
@@ -113,8 +121,12 @@ class ListViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(textField7)
         view.addSubview(textField8)
         
-        let btn:UIButton = UIButton(frame: CGRect(x: 20 + 100, y: 500, width: 80, height: 40))
+        let btn:UIButton = UIButton(frame: CGRect(x: 150, y: 600, width: 80, height: 40))
         btn.setTitle("Add", for: .normal)
+        btn.layer.cornerRadius = 5.0
+        btn.layer.borderColor = UIColor.white.cgColor
+        btn.layer.borderWidth = 2.0
+        btn.backgroundColor = UIColor.darkGray
         btn.addTarget(self, action:#selector(buttonAction), for: .touchUpInside)
         view.addSubview(btn)
     }
