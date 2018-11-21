@@ -69,34 +69,15 @@ class TableViewController: UIViewController, UITableViewDelegate{
     
 //    var managedContext: NSManagedObjectContext
 
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        clearCoreDataStore()
-//
-        resetAllRecords(in: "Department")
-//        resetAllRecords(in: "Vehicle")
+//        deleteRecords()
 
-//        createDepartment()
         getDepartments()
         getVehicles()
-        
-        
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-//        let managedContext = appDelegate.persistentContainer.viewContext
-//        let department = Department(context: managedContext)
-//        department.name = "789"
-//
-//
-//        appDelegate.saveContext()
-   
-//        let fetchRequest: NSFetchRequest<Department1> = Department1.fetchRequest()
-//        do{
-//            let department2 = try managedContext.fetch(fetchRequest)
-//            print(department2)
-//        } catch{
-//            
-//        }
-        
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -105,63 +86,93 @@ class TableViewController: UIViewController, UITableViewDelegate{
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
-    func resetAllRecords(in entity : String) // entity = Your_Entity_Name
-    {
+    func deleteRecords() -> Void {
+        let moc = getContext()
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Department")
         
-        let context = ( UIApplication.shared.delegate as! AppDelegate ).persistentContainer.viewContext
-        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
-        do
-        {
-            try context.execute(deleteRequest)
-            try context.save()
-        }
-        catch
-        {
-            print ("There was an error")
-        }
-    }
-    func clearCoreDataStore() {
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let context = delegate.persistentContainer.viewContext
+        let result = try? moc.fetch(fetchRequest)
+        let resultData = result as! [Department]
         
-        for i in 0...delegate.persistentContainer.managedObjectModel.entities.count-1 {
-            let entity = delegate.persistentContainer.managedObjectModel.entities[i]
+        for object in resultData {
+            moc.delete(object)
+        }
+        
+        do {
+            try moc.save()
+            print("saved!")
+        } catch let error as NSError  {
+            print("Could not save \(error), \(error.userInfo)")
+        } catch {
             
-            do {
-                let query = NSFetchRequest<NSFetchRequestResult>(entityName: entity.name!)
-                let deleterequest = NSBatchDeleteRequest(fetchRequest: query)
-                try context.execute(deleterequest)
-                try context.save()
-                
-            } catch let error as NSError {
-                print("Error: \(error.localizedDescription)")
-//                abort()
-            }
         }
+        
     }
     
+    // MARK: Get Context
+    
+    func getContext () -> NSManagedObjectContext {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        return appDelegate.persistentContainer.viewContext
+    }
+//    func resetAllRecords(in entity : String) // entity = Your_Entity_Name
+//    {
+//
+//        let context = ( UIApplication.shared.delegate as! AppDelegate ).persistentContainer.viewContext
+//        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+//        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
+//        do
+//        {
+//            try context.execute(deleteRequest)
+//            try context.save()
+//        }
+//        catch
+//        {
+//            print ("There was an error")
+//        }
+//    }
+    
+//    func clearCoreDataStore() {
+//        let delegate = UIApplication.shared.delegate as! AppDelegate
+//        let context = delegate.persistentContainer.viewContext
+//
+//        for i in 0...delegate.persistentContainer.managedObjectModel.entities.count-1 {
+//            let entity = delegate.persistentContainer.managedObjectModel.entities[i]
+//
+//            do {
+//                let query = NSFetchRequest<NSFetchRequestResult>(entityName: entity.name!)
+//                let deleterequest = NSBatchDeleteRequest(fetchRequest: query)
+//                try context.execute(deleterequest)
+//                try context.save()
+//
+//            } catch let error as NSError {
+//                print("Error: \(error.localizedDescription)")
+//                abort()
+//            }
+//        }
+//    }
+    
     func createDepartment(){
-        let context = ( UIApplication.shared.delegate as! AppDelegate ).persistentContainer.viewContext
+//        let context = ( UIApplication.shared.delegate as! AppDelegate ).persistentContainer.viewContext
+        let context = getContext()
         department1 = Department(context: context)
         department1?.name = "Northeastern"
     }
     
     func getDepartments(){
-        let context = ( UIApplication.shared.delegate as! AppDelegate ).persistentContainer.viewContext
+        let context = getContext()
         guard let departments = try! context.fetch(Department.fetchRequest()) as? [Department] else { return }
 //        departments.forEach({print($0.name)})
         if departments.capacity == 0 { createDepartment() }
         else{
             department1 = departments[0]                //temporary use first one
+//            print(departments.capacity)
         }
     }
     
     func createVehicle(){
-        let context = ( UIApplication.shared.delegate as! AppDelegate ).persistentContainer.viewContext
+        let context = getContext()
         let vehicle1 = Vehicle(context: context)
-        
-        
+  
         let dateformatter = DateFormatter()
         dateformatter.dateFormat = "yyyy"
         let date1 = dateformatter.date(from: "2016") as NSDate?
@@ -178,19 +189,6 @@ class TableViewController: UIViewController, UITableViewDelegate{
      
         vehicles = department1?.vehicles?.allObjects  as! [Vehicle]
         vehicles.forEach({print($0)})
-//
-        
-       
-//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Vehicle")
-//        let predicate = NSPredicate(format: "department == 'department1'")
-//        fetchRequest.predicate = predicate
-//        do {
-//            vehicles = try context.fetch(fetchRequest) as! [Vehicle]
-//            print(vehicles)
-//        }
-//        catch{
-//            print ("There was an error")
-//        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -199,18 +197,6 @@ class TableViewController: UIViewController, UITableViewDelegate{
     }
 
     
-    
-
-//    @objc func removeSubview(){
-//        print("Start remove sibview")
-//        if let viewWithTag = self.view.viewWithTag(100) {
-//            viewWithTag.removeFromSuperview()
-//        }else{
-//            print("No!")
-//        }
-//    }
-    
-//
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -302,17 +288,6 @@ extension TableViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath as IndexPath) as! TableViewCell
 //                        let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath as IndexPath)
         
-        //        cell.vehicle = vehicles[indexPath.row]
-        
-        
-//        let dateformatter = DateFormatter()
-//        dateformatter.dateFormat = "yyyy"
-//        let year = dateformatter.string(from: vehicles[indexPath.row].year)
-        
-//        cell.img.image = UIImage(named: vehicles[indexPath.row].photo)
-//        cell.label1.text = "\(vehicles[indexPath.row].model)"
-//        cell.label2.text = "\(vehicles[indexPath.row].type)"
-//        cell.label3.text = "\(year)"
 
         
 //        let vehicle = vehicles[indexPath.row]
@@ -326,8 +301,14 @@ extension TableViewController: UITableViewDataSource {
 //        cell.label3.text = "\(year)"
 //        cell.label1.text = "123"
         
+        let dateformatter = DateFormatter()
+        dateformatter.dateFormat = "yyyy"
+        let year = dateformatter.string(from: vehicles[indexPath.row].year! as Date)
+        
+        
         cell.label1.text = vehicles[indexPath.row].model
         cell.label2.text = vehicles[indexPath.row].type
+        cell.label3.text = "\(year)"
         return cell
     }
 
