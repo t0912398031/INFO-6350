@@ -40,6 +40,7 @@
 		6C140AC521A514A4006ADD22 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		6C140AC621A514A4006ADD22 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		6C140AC721A514A4006ADD22 /* AddVehicleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddVehicleViewController.swift; sourceTree = "<group>"; };
+		6C140AD421A54F96006ADD22 /* Assignment10_library 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Assignment10_library 2.xcdatamodel"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -375,6 +376,7 @@
 		6C140A9C21A4CE33006ADD22 /* Assignment10_library.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				6C140AD421A54F96006ADD22 /* Assignment10_library 2.xcdatamodel */,
 				6C140A9D21A4CE33006ADD22 /* Assignment10_library.xcdatamodel */,
 			);
 			currentVersion = 6C140A9D21A4CE33006ADD22 /* Assignment10_library.xcdatamodel */;

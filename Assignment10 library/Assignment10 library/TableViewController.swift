@@ -27,13 +27,26 @@ class TableViewController: UIViewController, UITableViewDelegate{
     }
     
 
+
+    @IBAction func addVehicle(_ sender: UIBarButtonItem) {
+        createVehicle()
+        getVehicles()
+        
+        tableView.reloadData()
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        appDelegate.saveContext()
+        
+    }
     @IBOutlet weak var tableView: UITableView!
-    //    var department1 = Department("Sales","510-679-7777")
+
+//    var departments = [Department]()
     var department1 : Department?
 
     private let myArray: NSArray = ["First","Second","Third"]
-//    var vehicles: [Vehicle] = []
-    var vehicles: [NSManagedObject] = []
+    var vehicles = [Vehicle]()
+//    var vehicles: [NSManagedObject] = []
+//    var vehicles: NSSet?
+    @NSManaged var types : Set<Vehicle>
     var array = ["123","234","345"]
     
     
@@ -58,13 +71,15 @@ class TableViewController: UIViewController, UITableViewDelegate{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+//        clearCoreDataStore()
+//
         resetAllRecords(in: "Department")
-        resetAllRecords(in: "Vehicle")
+//        resetAllRecords(in: "Vehicle")
 
-        tableView.backgroundColor = .red
-        createDepartment()
+//        createDepartment()
         getDepartments()
+        getVehicles()
+        
         
 //        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
 //        let managedContext = appDelegate.persistentContainer.viewContext
@@ -83,10 +98,6 @@ class TableViewController: UIViewController, UITableViewDelegate{
 //        }
         
         
-        
-//        configureVehicles()
-//        vehicles = department1.List()
-        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -98,7 +109,7 @@ class TableViewController: UIViewController, UITableViewDelegate{
     {
         
         let context = ( UIApplication.shared.delegate as! AppDelegate ).persistentContainer.viewContext
-        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Department")
+        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
         do
         {
@@ -110,19 +121,76 @@ class TableViewController: UIViewController, UITableViewDelegate{
             print ("There was an error")
         }
     }
+    func clearCoreDataStore() {
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let context = delegate.persistentContainer.viewContext
+        
+        for i in 0...delegate.persistentContainer.managedObjectModel.entities.count-1 {
+            let entity = delegate.persistentContainer.managedObjectModel.entities[i]
+            
+            do {
+                let query = NSFetchRequest<NSFetchRequestResult>(entityName: entity.name!)
+                let deleterequest = NSBatchDeleteRequest(fetchRequest: query)
+                try context.execute(deleterequest)
+                try context.save()
+                
+            } catch let error as NSError {
+                print("Error: \(error.localizedDescription)")
+//                abort()
+            }
+        }
+    }
     
     func createDepartment(){
         let context = ( UIApplication.shared.delegate as! AppDelegate ).persistentContainer.viewContext
         department1 = Department(context: context)
         department1?.name = "Northeastern"
-        
     }
     
     func getDepartments(){
         let context = ( UIApplication.shared.delegate as! AppDelegate ).persistentContainer.viewContext
         guard let departments = try! context.fetch(Department.fetchRequest()) as? [Department] else { return }
-        departments.forEach({print($0.name)})
+//        departments.forEach({print($0.name)})
+        if departments.capacity == 0 { createDepartment() }
+        else{
+            department1 = departments[0]                //temporary use first one
+        }
+    }
+    
+    func createVehicle(){
+        let context = ( UIApplication.shared.delegate as! AppDelegate ).persistentContainer.viewContext
+        let vehicle1 = Vehicle(context: context)
         
+        
+        let dateformatter = DateFormatter()
+        dateformatter.dateFormat = "yyyy"
+        let date1 = dateformatter.date(from: "2016") as NSDate?
+        vehicle1.model = "Lamborghini"
+        vehicle1.type = "Coupe"
+        vehicle1.year = date1!
+        department1?.addToVehicles(vehicle1)
+//        department1?.vehicles?.forEach({print($0)})
+    }
+    
+    func getVehicles(){
+//        let context = ( UIApplication.shared.delegate as! AppDelegate ).persistentContainer.viewContext
+//        guard let vehicles = try! context.fetch(Vehicle.fetchRequest()) as? [Vehicle] else { return }
+     
+        vehicles = department1?.vehicles?.allObjects  as! [Vehicle]
+        vehicles.forEach({print($0)})
+//
+        
+       
+//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Vehicle")
+//        let predicate = NSPredicate(format: "department == 'department1'")
+//        fetchRequest.predicate = predicate
+//        do {
+//            vehicles = try context.fetch(fetchRequest) as! [Vehicle]
+//            print(vehicles)
+//        }
+//        catch{
+//            print ("There was an error")
+//        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -248,7 +316,6 @@ extension TableViewController: UITableViewDataSource {
 
         
 //        let vehicle = vehicles[indexPath.row]
-//
 //        let dateformatter = DateFormatter()
 //        dateformatter.dateFormat = "yyyy"
 //        let year = dateformatter.string(from: vehicle.value(forKeyPath: "year") as! Date)
@@ -257,7 +324,10 @@ extension TableViewController: UITableViewDataSource {
 //        cell.label1.text = vehicle.value(forKeyPath: "model") as? String
 //        cell.label2.text = vehicle.value(forKeyPath: "type") as? String
 //        cell.label3.text = "\(year)"
+//        cell.label1.text = "123"
         
+        cell.label1.text = vehicles[indexPath.row].model
+        cell.label2.text = vehicles[indexPath.row].type
         return cell
     }
 
@@ -286,6 +356,7 @@ extension TableViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return vehicles.count
+//        return 3
     }
     
     
