@@ -80,6 +80,11 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Vehicles" id="xNY-Ul-dQ1">
+                        <barButtonItem key="leftBarButtonItem" title="test" id="csD-e7-nJw">
+                            <connections>
+                                <action selector="test:" destination="BYZ-38-t0r" id="W0D-AK-yoi"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="TJ0-Kg-kK8">
                             <connections>
                                 <action selector="addVehicle:" destination="BYZ-38-t0r" id="fVW-AR-McR"/>

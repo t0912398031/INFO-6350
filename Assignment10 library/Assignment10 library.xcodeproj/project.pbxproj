@@ -13,14 +13,14 @@
 		6C140A9E21A4CE33006ADD22 /* Assignment10_library.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6C140A9C21A4CE33006ADD22 /* Assignment10_library.xcdatamodeld */; };
 		6C140AA021A4CE35006ADD22 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C140A9F21A4CE35006ADD22 /* Assets.xcassets */; };
 		6C140AA321A4CE35006ADD22 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C140AA121A4CE35006ADD22 /* LaunchScreen.storyboard */; };
-		6C140AB621A4EC41006ADD22 /* Department+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C140AB221A4EC41006ADD22 /* Department+CoreDataClass.swift */; };
-		6C140AB721A4EC41006ADD22 /* Department+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C140AB321A4EC41006ADD22 /* Department+CoreDataProperties.swift */; };
-		6C140AB821A4EC42006ADD22 /* Vehicle+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C140AB421A4EC41006ADD22 /* Vehicle+CoreDataClass.swift */; };
-		6C140AB921A4EC42006ADD22 /* Vehicle+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C140AB521A4EC41006ADD22 /* Vehicle+CoreDataProperties.swift */; };
 		6C140AC821A514A4006ADD22 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C140AC421A514A4006ADD22 /* DetailViewController.swift */; };
 		6C140AC921A514A4006ADD22 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C140AC521A514A4006ADD22 /* TableViewCell.swift */; };
 		6C140ACA21A514A4006ADD22 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C140AC621A514A4006ADD22 /* TableViewController.swift */; };
 		6C140ACB21A514A4006ADD22 /* AddVehicleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C140AC721A514A4006ADD22 /* AddVehicleViewController.swift */; };
+		6C6CB08421AA1150004B4633 /* Vehicle+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6CB08021AA1150004B4633 /* Vehicle+CoreDataClass.swift */; };
+		6C6CB08521AA1150004B4633 /* Vehicle+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6CB08121AA1150004B4633 /* Vehicle+CoreDataProperties.swift */; };
+		6C6CB08621AA1150004B4633 /* Department+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6CB08221AA1150004B4633 /* Department+CoreDataClass.swift */; };
+		6C6CB08721AA1150004B4633 /* Department+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6CB08321AA1150004B4633 /* Department+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,15 +32,15 @@
 		6C140A9F21A4CE35006ADD22 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6C140AA221A4CE35006ADD22 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6C140AA421A4CE35006ADD22 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6C140AB221A4EC41006ADD22 /* Department+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Department+CoreDataClass.swift"; sourceTree = "<group>"; };
-		6C140AB321A4EC41006ADD22 /* Department+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Department+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		6C140AB421A4EC41006ADD22 /* Vehicle+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Vehicle+CoreDataClass.swift"; sourceTree = "<group>"; };
-		6C140AB521A4EC41006ADD22 /* Vehicle+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Vehicle+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		6C140AC421A514A4006ADD22 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		6C140AC521A514A4006ADD22 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		6C140AC621A514A4006ADD22 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		6C140AC721A514A4006ADD22 /* AddVehicleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddVehicleViewController.swift; sourceTree = "<group>"; };
 		6C140AD421A54F96006ADD22 /* Assignment10_library 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Assignment10_library 2.xcdatamodel"; sourceTree = "<group>"; };
+		6C6CB08021AA1150004B4633 /* Vehicle+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Vehicle+CoreDataClass.swift"; sourceTree = "<group>"; };
+		6C6CB08121AA1150004B4633 /* Vehicle+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Vehicle+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		6C6CB08221AA1150004B4633 /* Department+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Department+CoreDataClass.swift"; sourceTree = "<group>"; };
+		6C6CB08321AA1150004B4633 /* Department+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Department+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,10 +73,10 @@
 		6C140A9421A4CE33006ADD22 /* Assignment10 library */ = {
 			isa = PBXGroup;
 			children = (
-				6C140AB221A4EC41006ADD22 /* Department+CoreDataClass.swift */,
-				6C140AB321A4EC41006ADD22 /* Department+CoreDataProperties.swift */,
-				6C140AB421A4EC41006ADD22 /* Vehicle+CoreDataClass.swift */,
-				6C140AB521A4EC41006ADD22 /* Vehicle+CoreDataProperties.swift */,
+				6C6CB08021AA1150004B4633 /* Vehicle+CoreDataClass.swift */,
+				6C6CB08121AA1150004B4633 /* Vehicle+CoreDataProperties.swift */,
+				6C6CB08221AA1150004B4633 /* Department+CoreDataClass.swift */,
+				6C6CB08321AA1150004B4633 /* Department+CoreDataProperties.swift */,
 				6C140A9521A4CE33006ADD22 /* AppDelegate.swift */,
 				6C140A9721A4CE33006ADD22 /* ViewController.swift */,
 				6C140AC721A514A4006ADD22 /* AddVehicleViewController.swift */,
@@ -163,16 +163,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6C140AB821A4EC42006ADD22 /* Vehicle+CoreDataClass.swift in Sources */,
 				6C140ACB21A514A4006ADD22 /* AddVehicleViewController.swift in Sources */,
-				6C140AB721A4EC41006ADD22 /* Department+CoreDataProperties.swift in Sources */,
 				6C140A9821A4CE33006ADD22 /* ViewController.swift in Sources */,
+				6C6CB08521AA1150004B4633 /* Vehicle+CoreDataProperties.swift in Sources */,
+				6C6CB08421AA1150004B4633 /* Vehicle+CoreDataClass.swift in Sources */,
 				6C140ACA21A514A4006ADD22 /* TableViewController.swift in Sources */,
+				6C6CB08621AA1150004B4633 /* Department+CoreDataClass.swift in Sources */,
 				6C140AC921A514A4006ADD22 /* TableViewCell.swift in Sources */,
-				6C140AB621A4EC41006ADD22 /* Department+CoreDataClass.swift in Sources */,
 				6C140A9621A4CE33006ADD22 /* AppDelegate.swift in Sources */,
+				6C6CB08721AA1150004B4633 /* Department+CoreDataProperties.swift in Sources */,
 				6C140A9E21A4CE33006ADD22 /* Assignment10_library.xcdatamodeld in Sources */,
-				6C140AB921A4EC42006ADD22 /* Vehicle+CoreDataProperties.swift in Sources */,
 				6C140AC821A514A4006ADD22 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

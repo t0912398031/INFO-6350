@@ -2,7 +2,7 @@
 //  Department+CoreDataProperties.swift
 //  Assignment10 library
 //
-//  Created by Chung-Yang Li on 11/20/18.
+//  Created by Chung-Yang Li on 11/24/18.
 //  Copyright © 2018 Chung-Yang Li. All rights reserved.
 //
 //
@@ -17,9 +17,9 @@ extension Department {
         return NSFetchRequest<Department>(entityName: "Department")
     }
 
+    @NSManaged public var employees: NSObject?
     @NSManaged public var name: String?
     @NSManaged public var phone: String?
-    @NSManaged public var employees: NSObject?
     @NSManaged public var vehicles: NSSet?
 
 }
