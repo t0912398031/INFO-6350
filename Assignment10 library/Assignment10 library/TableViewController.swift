@@ -14,14 +14,16 @@ class TableViewController: UIViewController, UITableViewDelegate{
     @IBAction func test(_ sender: Any) {
         print(getVehicle(id: "2"))
     }
-    @IBAction func addVehicle(_ sender: UIBarButtonItem) {
-        createVehicle()
+//    @IBAction func addVehicle(_ sender: UIBarButtonItem) {
+//        createVehicle()
 //        getVehicles()
-        
-        tableView.reloadData()
-        save()
-        
-    }
+//
+//        tableView.reloadData()
+//        save()
+//
+//    }
+    
+    
     @IBOutlet weak var tableView: UITableView!
 
 //    var departments = [Department]()
@@ -29,69 +31,72 @@ class TableViewController: UIViewController, UITableViewDelegate{
 
 //    var vehicles = [Vehicle]()
     var vehicles: [NSManagedObject] = []
+    var filteredVehicles: [NSManagedObject] = []
     
-    var count = 0
-
-
+    var maxid = 0
+//    var resultSearchController = UISearchController()
+    let searchController = UISearchController(searchResultsController: nil)
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        vehicles = fetchDepartment()
+        getVehicles()
         //        print(vehicles.count)
         tableView.reloadData()
     }
     
-//    func fetchDepartment() -> [Department1]{
-//        let fetchRequest: NSFetchRequest<Department1> = Department1.fetchRequest()
-//        do{
-//            let department1 = try managedContext.fetch(fetchRequest)
-//        } catch{
-//
-//        }
-//        return department1
-//    }
-    
-//    var managedContext: NSManagedObjectContext
 
-    
-    
-    
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
-        resetAllRecords(in: "Vehicle")
-        deleteRecords()
+//        resetAllRecords(in: "Vehicle")
+//        resetAllRecords(in: "Department")
 
         getDepartments()
+        
+        
         getVehicles()
+        
+        initializeVehicles()
+        getMaxID()
+        
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+//        self.resultSearchController = ({
+//            let controller = UISearchController(searchResultsController: nil)
+//            controller.searchResultsUpdater = self
+//            controller.dimsBackgroundDuringPresentation = false
+//            controller.searchBar.sizeToFit()
+//            controller.searchBar.barStyle = UIBarStyle.black
+//            controller.searchBar.barTintColor = UIColor.white
+//            controller.searchBar.backgroundColor = UIColor.clear
+//            tableView.tableHeaderView = controller.searchBar
+//            return controller
+//        })()
+//
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Candies"
+        searchController.hidesNavigationBarDuringPresentation = false
+//        navigationItem.searchController = searchController
+        navigationItem.titleView = searchController.searchBar
+        searchController.searchBar.delegate = self
+        definesPresentationContext = true
     }
     
-    func deleteRecords() -> Void {
-        let moc = getContext()
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Department")
-        
-        let result = try? moc.fetch(fetchRequest)
-        let resultData = result as! [Department]
-        
-        for object in resultData {
-            moc.delete(object)
-        }
-        
-        do {
-            try moc.save()
-            print("saved!")
-        } catch let error as NSError  {
-            print("Could not save \(error), \(error.userInfo)")
-        } catch {
-            
-        }
-        
-    }
+    //    func fetchDepartment() -> [Department1]{
+    //        let fetchRequest: NSFetchRequest<Department1> = Department1.fetchRequest()
+    //        do{
+    //            let department1 = try managedContext.fetch(fetchRequest)
+    //        } catch{
+    //
+    //        }
+    //        return department1
+    //    }
     
     // MARK: Get Context
     
@@ -156,6 +161,30 @@ class TableViewController: UIViewController, UITableViewDelegate{
 //        }
 //    }
     
+    
+    //    func deleteRecords() -> Void {
+    //        let moc = getContext()
+    //        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Department")
+    //
+    //        let result = try? moc.fetch(fetchRequest)
+    //        let resultData = result as! [Department]
+    //
+    //        for object in resultData {
+    //            moc.delete(object)
+    //        }
+    //
+    //        do {
+    //            try moc.save()
+    //            print("saved!")
+    //        } catch let error as NSError  {
+    //            print("Could not save \(error), \(error.userInfo)")
+    //        } catch {
+    //
+    //        }
+    //
+    //    }
+    
+    
     func createDepartment(){
 //        let context = ( UIApplication.shared.delegate as! AppDelegate ).persistentContainer.viewContext
         let context = getContext()
@@ -175,6 +204,57 @@ class TableViewController: UIViewController, UITableViewDelegate{
         }
     }
     
+    func initializeVehicles(){
+        guard vehicles.count == 0 else{return}
+        
+        let context = getContext()
+        
+        let dateformatter = DateFormatter()
+        dateformatter.dateFormat = "yyyy"
+        let date1 = dateformatter.date(from: "2016") as NSDate?
+        let date2 = dateformatter.date(from: "2017") as NSDate?
+        let date3 = dateformatter.date(from: "2018") as NSDate?
+        let date4 = dateformatter.date(from: "2019") as NSDate?
+        
+        let vehicle1 = Vehicle(context: context)
+        vehicle1.model = "Lamborghini"
+        vehicle1.type = "Coupe"
+        vehicle1.year = date1!
+        vehicle1.id = Int32(maxid)
+        vehicle1.department = department1
+        department1?.addToVehicles(vehicle1)
+        maxid += 1
+        
+        let vehicle2 = Vehicle(context: context)
+        vehicle2.model = "Porsche"
+        vehicle2.type = "Coup"
+        vehicle2.year = date2!
+        vehicle2.id = Int32(maxid)
+        vehicle2.department = department1
+        department1?.addToVehicles(vehicle2)
+        maxid += 1
+        
+        let vehicle3 = Vehicle(context: context)
+        vehicle3.model = "Ferrari"
+        vehicle3.type = "Cou"
+        vehicle3.year = date3!
+        vehicle3.id = Int32(maxid)
+        vehicle3.department = department1
+        department1?.addToVehicles(vehicle3)
+        maxid += 1
+        
+        let vehicle4 = Vehicle(context: context)
+        vehicle4.model = "Mercedes-Benz"
+        vehicle4.type = "Co"
+        vehicle4.year = date4!
+        vehicle4.id = Int32(maxid)
+        vehicle4.department = department1
+        department1?.addToVehicles(vehicle4)
+        maxid += 1
+        
+        tableView.reloadData()
+    }
+    
     func createVehicle(){
         let context = getContext()
         let vehicle1 = Vehicle(context: context)
@@ -185,29 +265,23 @@ class TableViewController: UIViewController, UITableViewDelegate{
         vehicle1.model = "Lamborghini"
         vehicle1.type = "Coupe"
         vehicle1.year = date1!
-        vehicle1.id = Int32(count)
+        vehicle1.id = Int32(maxid)
         vehicle1.department = department1
         department1?.addToVehicles(vehicle1)
 //        department1?.vehicles?.forEach({print($0)})
-        count += 1
-        
-        
-        vehicles = department1?.vehicles?.allObjects  as! [Vehicle]
+        maxid += 1
+
     }
     
     func getVehicles(){
-        vehicles = department1?.vehicles?.allObjects  as! [Vehicle]
+        let v = department1?.vehicles?.allObjects  as! [Vehicle]
+        vehicles = v.sorted { (a, b) -> Bool in
+            return a.id < b.id
+        }
 //        vehicles.forEach({print($0.model)})
         
-        for v in vehicles {
-            if let id = v.value(forKeyPath: "id") as? Int{
-                if id > count{
-                    count = id
-                }
-            }
-            else{print("no id")}
-            
-        }
+        
+        
     
         
 //        let context = getContext()
@@ -223,6 +297,18 @@ class TableViewController: UIViewController, UITableViewDelegate{
         
 //        guard let v = try! context.fetch(Vehicle.fetchRequest()) as? [Vehicle] else { return}
         
+    }
+    func getMaxID(){
+        for v in vehicles {
+            if let id = v.value(forKeyPath: "id") as? Int{
+                if id > maxid{
+                    maxid = id
+                }
+            }
+            else{print("no id")}
+            
+        }
+        maxid += 1
     }
     
     func getVehicle(id: String) -> NSManagedObject?{
@@ -249,10 +335,10 @@ class TableViewController: UIViewController, UITableViewDelegate{
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if(segue.identifier == "Add"){
-//            let destViewController : AddVehicleViewController = segue.destination as! AddVehicleViewController
-//            destViewController.department = department1
-//        }
+        if(segue.identifier == "Add"){
+            let destViewController : AddVehicleViewController = segue.destination as! AddVehicleViewController
+            destViewController.department = department1
+        }
         
     }
     
@@ -283,8 +369,30 @@ class TableViewController: UIViewController, UITableViewDelegate{
         // Pass the selected object to the new view controller.
     }
     */
+    
+    
+    func searchBarIsEmpty() -> Bool {
+        // Returns true if the text is empty or nil
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+        filteredVehicles = vehicles.filter({( v : NSManagedObject) -> Bool in
+//            return candy.name.lowercased().contains(searchText.lowercased())
+            return String((v.value(forKey: "id") as? Int)!).lowercased().contains(searchText.lowercased())
+            
+        })
+        
+        tableView.reloadData()
+    }
 
 }
+
+
+
+
+
+
 
 extension TableViewController: UITableViewDataSource {
     
@@ -293,9 +401,15 @@ extension TableViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath as IndexPath) as! TableViewCell
 //                        let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath as IndexPath)
         
+        let vehicle: NSManagedObject
+        if self.searchController.isActive {
+            vehicle = filteredVehicles[indexPath.row]
+        } else {
+            vehicle = vehicles[indexPath.row]
+        }
 
         
-        let vehicle = vehicles[indexPath.row]
+//        let vehicle = vehicles[indexPath.row]
         let dateformatter = DateFormatter()
         dateformatter.dateFormat = "yyyy"
         let year = dateformatter.string(from: vehicle.value(forKeyPath: "year") as! Date)
@@ -306,14 +420,7 @@ extension TableViewController: UITableViewDataSource {
         cell.label2.text = vehicle.value(forKeyPath: "type") as? String
         cell.label3.text = "\(year)"
 
-        
-        
-        
-        
-        
-        
-        
-        
+
 //        let dateformatter = DateFormatter()
 //        dateformatter.dateFormat = "yyyy"
 //        let year = dateformatter.string(from: vehicles[indexPath.row].year! as Date)
@@ -324,6 +431,7 @@ extension TableViewController: UITableViewDataSource {
 //        cell.label3.text = "\(year)"
         return cell
     }
+    
 
     
     /* click action */
@@ -348,9 +456,21 @@ extension TableViewController: UITableViewDataSource {
 //
     }
     
+    // MARK: - Table view data source
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return 1
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+//        return vehicles.count
+        if self.searchController.isActive {
+            return filteredVehicles.count
+        }
         return vehicles.count
-//        return 3
+        
     }
     
     
@@ -380,12 +500,9 @@ extension TableViewController: UITableViewDataSource {
     //        return 100
     //    }
     
-    // MARK: - Table view data source
     
-    //    func numberOfSections(in tableView: UITableView) -> Int {
-    //        // #warning Incomplete implementation, return the number of sections
-    //        return 0
-    //    }
+    
+    
     
     
     
@@ -412,4 +529,38 @@ extension TableViewController: UITableViewDataSource {
      return true
      }
      */
+}
+
+extension TableViewController: UISearchResultsUpdating {
+    // MARK: - UISearchResultsUpdating Delegate
+    func updateSearchResults(for searchController: UISearchController) {
+//        filteredVehicles.removeAll(keepingCapacity: false)
+//
+//        fetchRequest.predicate = NSPredicate(format: "id = %@", id)
+//
+//        let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", searchController.searchBar.text)
+//        let array = (vehicles as NSArray).filteredArrayUsingPredicate(searchPredicate)
+//        filteredVehicles = array as! [String]
+//        tableView.reloadData()
+//
+//
+        filterContentForSearchText(searchController.searchBar.text!)
+    }
+}
+
+extension TableViewController: UISearchBarDelegate {
+//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+//        searchController.searchBar.text = nil
+//        searchBar.resignFirstResponder()
+//    }
+//
+//    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+//        searchController.searchBar.text = nil
+//        searchBar.resignFirstResponder()
+//    }
+//
+//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+//        searchController.searchBar.text = nil
+//        searchBar.resignFirstResponder()
+//    }
 }
