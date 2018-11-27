@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Assignment10 library/AddVehicleViewController.swift"
+            timestampString = "565051088.861573"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "showAlertWith(title:message:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Assignment10 library/AddVehicleViewController.swift"
+            timestampString = "565051088.861991"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "AddVehicleViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Assignment10_library.AddVehicleViewController.txt4.getter : weak Swift.Optional&lt;__C.UITextField&gt;"
+                  moduleName = "Assignment10 library"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/li.chun/Desktop/untitled%20folder/INFO-6350/Assignment10%20library/Assignment10%20library/AddVehicleViewController.swift"
+                  timestampString = "565050754.849033"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "45"
+                  endingLineNumber = "45"
+                  offsetFromSymbolStart = "86">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Assignment10_library.AddVehicleViewController.txt4.setter : weak Swift.Optional&lt;__C.UITextField&gt;"
+                  moduleName = "Assignment10 library"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/li.chun/Desktop/untitled%20folder/INFO-6350/Assignment10%20library/Assignment10%20library/AddVehicleViewController.swift"
+                  timestampString = "565050754.8580509"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "45"
+                  endingLineNumber = "45"
+                  offsetFromSymbolStart = "106">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Assignment10_library.AddVehicleViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; Assignment10_library.AddVehicleViewController"
+                  moduleName = "Assignment10 library"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/li.chun/Desktop/untitled%20folder/INFO-6350/Assignment10%20library/Assignment10%20library/AddVehicleViewController.swift"
+                  timestampString = "565050754.862107"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "45"
+                  endingLineNumber = "45"
+                  offsetFromSymbolStart = "389">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Assignment10_library.AddVehicleViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;Assignment10_library.AddVehicleViewController&gt;"
+                  moduleName = "Assignment10 library"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/li.chun/Desktop/untitled%20folder/INFO-6350/Assignment10%20library/Assignment10%20library/AddVehicleViewController.swift"
+                  timestampString = "565050754.864027"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "45"
+                  endingLineNumber = "45"
+                  offsetFromSymbolStart = "357">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

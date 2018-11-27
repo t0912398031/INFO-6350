@@ -10,9 +10,11 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
+
     @IBOutlet weak var make: UILabel!
     @IBOutlet weak var miles: UILabel!
     @IBOutlet weak var model: UILabel!
+    @IBOutlet weak var photo: UILabel!
     @IBOutlet weak var price: UILabel!
     @IBOutlet weak var rating: UILabel!
     @IBOutlet weak var type: UILabel!
@@ -22,6 +24,7 @@ class DetailViewController: UIViewController {
     var txtMake: String = ""
     var txtMiles: String = ""
     var txtModel: String = ""
+    var txtPhoto: String = ""
     var txtPrice: String = ""
     var txtRating: String = ""
     var txtType: String = ""
@@ -33,6 +36,7 @@ class DetailViewController: UIViewController {
         make.text = txtMake
         miles.text = txtMiles
         model.text = txtModel
+        photo.text = txtPhoto
         price.text = txtPrice
         rating.text = txtRating
         type.text = txtType

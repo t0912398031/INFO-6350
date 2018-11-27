@@ -170,7 +170,11 @@ class TableViewController: UIViewController, UITableViewDelegate{
         let date4 = dateformatter.date(from: "2019") as NSDate?
         
         let vehicle1 = Vehicle(context: context)
-        vehicle1.model = "Lamborghini"
+        vehicle1.make = "Lamborghini"
+        vehicle1.miles = 2.0
+        vehicle1.model = "HURACAN SPYDER"
+        vehicle1.price = 200000
+        vehicle1.rating = 17
         vehicle1.type = "Coupe"
         vehicle1.year = date1!
         vehicle1.photo = "2016 Lamborghini Huracan LP610-4 Spyder"
@@ -181,7 +185,11 @@ class TableViewController: UIViewController, UITableViewDelegate{
         saveImg(vehicle1.photo!, UIImage(named: vehicle1.photo!)!)
         
         let vehicle2 = Vehicle(context: context)
-        vehicle2.model = "Porsche"
+        vehicle2.make = "Lamborghini"
+        vehicle2.miles = 1.9
+        vehicle2.model = "HURACAN"
+        vehicle2.price = 210000
+        vehicle2.rating = 9
         vehicle2.type = "Coup"
         vehicle2.year = date2!
         vehicle2.photo = "2017-Lamborghini-Huracan"
@@ -192,7 +200,11 @@ class TableViewController: UIViewController, UITableViewDelegate{
         saveImg(vehicle2.photo!, UIImage(named: vehicle2.photo!)!)
         
         let vehicle3 = Vehicle(context: context)
-        vehicle3.model = "Ferrari"
+        vehicle3.make = "Lamborghini"
+        vehicle3.miles = 2.2
+        vehicle3.model = "HURACAN PERFORMANTE"
+        vehicle3.price = 220000
+        vehicle3.rating = 5
         vehicle3.type = "Cou"
         vehicle3.year = date3!
         vehicle3.photo = "2018-lamborghini-huracan-performante"
@@ -203,7 +215,11 @@ class TableViewController: UIViewController, UITableViewDelegate{
         saveImg(vehicle3.photo!, UIImage(named: vehicle3.photo!)!)
         
         let vehicle4 = Vehicle(context: context)
-        vehicle4.model = "Mercedes-Benz"
+        vehicle4.make = "Lamborghini"
+        vehicle4.miles = 1.8
+        vehicle4.model = "HURACAN RWD"
+        vehicle4.price = 190000
+        vehicle4.rating = 11
         vehicle4.type = "Co"
         vehicle4.year = date4!
         vehicle4.photo = "huracan-rwd"
@@ -382,23 +398,26 @@ extension TableViewController: UITableViewDataSource {
     
     /* click action */
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let vehicle = vehicles[indexPath.row]
+        let dateformatter = DateFormatter()
+        dateformatter.dateFormat = "yyyy"
+        let year = dateformatter.string(from: vehicle.value(forKeyPath: "year") as! Date)
+        var dc = storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController
 
-//        let dateformatter = DateFormatter()
-//        dateformatter.dateFormat = "yyyy"
-//        let year = dateformatter.string(from: vehicles[indexPath.row].year)
-//
-//        var dc = storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController
-//
-//        dc?.txtMake = vehicles[indexPath.row].make
-//        dc?.txtMiles = String(vehicles[indexPath.row].miles)
-//        dc?.txtModel = vehicles[indexPath.row].model
-//        dc?.txtRating = String(vehicles[indexPath.row].rating)
-//        dc?.txtPrice = String(vehicles[indexPath.row].price)
-//        dc?.txtType = vehicles[indexPath.row].type
-//        dc?.txtYear = year
-//        dc?.image = UIImage(named: vehicles[indexPath.row].photo)
-//
-//        self.navigationController?.pushViewController(dc!, animated: true)
+        
+        dc?.txtMake = vehicle.value(forKey: "make") as? String ?? ""
+        dc?.txtMiles = String((vehicle.value(forKey: "rating") as? Double)!)
+        dc?.txtModel = vehicle.value(forKey: "model") as? String ?? ""
+        dc?.txtPhoto = vehicle.value(forKey: "photo") as? String ?? ""
+        dc?.txtRating = String((vehicle.value(forKey: "rating") as? Int)!)
+        dc?.txtPrice = String((vehicle.value(forKey: "rating") as? Double)!)
+        dc?.txtType = vehicle.value(forKey: "type") as? String ?? ""
+        dc?.txtYear = year
+        dc?.image = readImg(vehicle.value(forKey: "photo") as? String ?? "")
+        
+
+        self.navigationController?.pushViewController(dc!, animated: true)
 //
     }
     
