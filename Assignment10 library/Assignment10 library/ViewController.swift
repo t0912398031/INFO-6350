@@ -100,12 +100,20 @@ class ViewController: UIViewController {
         present(alert, animated: true, completion: nil)
         // Do any additional setup after loading the view, typically from a nib.
     }
+
+}
+
+public extension UIViewController{
+    func getContext () -> NSManagedObjectContext {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        return appDelegate.persistentContainer.viewContext
+    }
     
     func resetAllRecords(in entity : String) // entity = Your_Entity_Name
     {
         
         let context = ( UIApplication.shared.delegate as! AppDelegate ).persistentContainer.viewContext
-        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Department")
+        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
         do
         {
@@ -117,7 +125,6 @@ class ViewController: UIViewController {
             print ("There was an error")
         }
     }
-
 }
 
 public extension String{

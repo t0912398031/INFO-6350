@@ -11,9 +11,9 @@ import CoreData
 
 class TableViewController: UIViewController, UITableViewDelegate{
     
-    @IBAction func test(_ sender: Any) {
-        print(getVehicle(id: "2"))
-    }
+//    @IBAction func test(_ sender: Any) {
+//        print(getVehicle(id: "2"))
+//    }
 //    @IBAction func addVehicle(_ sender: UIBarButtonItem) {
 //        createVehicle()
 //        getVehicles()
@@ -41,6 +41,7 @@ class TableViewController: UIViewController, UITableViewDelegate{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getVehicles()
+        getMaxID()
         //        print(vehicles.count)
         tableView.reloadData()
     }
@@ -53,8 +54,6 @@ class TableViewController: UIViewController, UITableViewDelegate{
 //        resetAllRecords(in: "Department")
 
         getDepartments()
-        
-        
         getVehicles()
         
         initializeVehicles()
@@ -100,10 +99,10 @@ class TableViewController: UIViewController, UITableViewDelegate{
     
     // MARK: Get Context
     
-    func getContext () -> NSManagedObjectContext {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        return appDelegate.persistentContainer.viewContext
-    }
+//    func getContext () -> NSManagedObjectContext {
+//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//        return appDelegate.persistentContainer.viewContext
+//    }
     
     func save() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
@@ -124,22 +123,22 @@ class TableViewController: UIViewController, UITableViewDelegate{
         }
         
     }
-    func resetAllRecords(in entity : String) // entity = Your_Entity_Name
-    {
-
-        let context = ( UIApplication.shared.delegate as! AppDelegate ).persistentContainer.viewContext
-        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
-        do
-        {
-            try context.execute(deleteRequest)
-            try context.save()
-        }
-        catch
-        {
-            print ("There was an error")
-        }
-    }
+//    func resetAllRecords(in entity : String) // entity = Your_Entity_Name
+//    {
+//
+//        let context = ( UIApplication.shared.delegate as! AppDelegate ).persistentContainer.viewContext
+//        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+//        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
+//        do
+//        {
+//            try context.execute(deleteRequest)
+//            try context.save()
+//        }
+//        catch
+//        {
+//            print ("There was an error")
+//        }
+//    }
     
 //    func clearCoreDataStore() {
 //        let delegate = UIApplication.shared.delegate as! AppDelegate
@@ -299,6 +298,7 @@ class TableViewController: UIViewController, UITableViewDelegate{
         
     }
     func getMaxID(){
+        maxid = 0
         for v in vehicles {
             if let id = v.value(forKeyPath: "id") as? Int{
                 if id > maxid{
@@ -338,6 +338,7 @@ class TableViewController: UIViewController, UITableViewDelegate{
         if(segue.identifier == "Add"){
             let destViewController : AddVehicleViewController = segue.destination as! AddVehicleViewController
             destViewController.department = department1
+            destViewController.maxid = maxid
         }
         
     }
