@@ -10,7 +10,14 @@ import UIKit
 
 class AddVehicleViewController: UIViewController {
 
-
+    @IBAction func browse(_ sender: UIButton) {
+//        print(getDirectoryPath())
+//        saveImageDocumentDirectory()
+saveImg("789")
+    }
+    @IBAction func read(_ sender: UIButton) {
+        readImg("123")
+    }
     @IBOutlet weak var txt1: UITextField!
     @IBOutlet weak var txt2: UITextField!
     @IBOutlet weak var txt3: UITextField!
@@ -176,7 +183,8 @@ extension AddVehicleViewController: UIImagePickerControllerDelegate, UINavigatio
         self.present(imagePicker, animated: true, completion: nil)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController,
+    
+    @objc func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         guard let selectedImage = info[.originalImage] as? UIImage else {
@@ -185,6 +193,7 @@ extension AddVehicleViewController: UIImagePickerControllerDelegate, UINavigatio
         }
         
         pickedImageProduct = selectedImage
+        
         img.image = pickedImageProduct
         dismiss(animated: true, completion: nil)
     }
@@ -220,5 +229,86 @@ extension AddVehicleViewController: UIImagePickerControllerDelegate, UINavigatio
 //        }
 //        img.image = selectedImage
 //        dismiss(animated: true, completion: nil)
+//    }
+}
+
+
+
+extension AddVehicleViewController {
+    func saveImg(_ fileName: String){
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        // choose a name for your image
+//        let fileName = name
+        // create the destination file url to save your image
+        let fileURL = documentsDirectory.appendingPathComponent(fileName)
+        // get your UIImage jpeg data representation and check if the destination file url already exists
+        if let data = pickedImageProduct.jpegData(compressionQuality: 1.0),
+            !FileManager.default.fileExists(atPath: fileURL.path) {
+            do {
+                // writes the image data to disk
+                try data.write(to: fileURL)
+                print("file saved")
+            } catch {
+                print("error saving file:", error)
+            }
+        }
+    }
+    
+    func readImg(_ fileName: String){
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let fileURL = documentsDirectory.appendingPathComponent(fileName)
+        if FileManager.default.fileExists(atPath: fileURL.path){
+            img.image = UIImage(contentsOfFile: fileURL.path)
+        }else{
+            print("No Image")
+        }
+    }
+    
+//    func saveImageDocumentDirectory(){
+//        let s = pickedImageProduct.accessibilityIdentifier
+//
+//        let fileManager = FileManager.default
+//        let paths = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("apple.jpg")
+//        let image = UIImage(named: "apple.jpg")
+//        print(paths)
+////        let imageData = UIImageJPEGRepresentation(image!, 0.5)
+//        let imageData = image!.jpegData(compressionQuality: 0.5)
+//        fileManager.createFile(atPath: paths as String, contents: imageData, attributes: nil)
+//    }
+//
+//    func getDirectoryPath() -> String {
+//        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+//        let documentsDirectory = paths[0]
+//        return documentsDirectory
+//    }
+    
+//    func getImage(){
+//        let fileManager = NSFileManager.defaultManager()
+//        let imagePAth = (self.getDirectoryPath() as NSString).stringByAppendingPathComponent("apple.jpg")
+//        if fileManager.fileExistsAtPath(imagePAth){
+//            self.imageView.image = UIImage(contentsOfFile: imagePAth)
+//        }else{
+//            print("No Image")
+//        }
+//    }
+//
+//    func createDirectory(){
+//        let fileManager = NSFileManager.defaultManager()
+//        let paths = (NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString).stringByAppendingPathComponent("customDirectory")
+//        if !fileManager.fileExistsAtPath(paths){
+//            try! fileManager.createDirectoryAtPath(paths, withIntermediateDirectories: true, attributes: nil)
+//        }else{
+//            print("Already dictionary created.")
+//        }
+//    }
+//
+//    func deleteDirectory(){
+//        let fileManager = NSFileManager.defaultManager()
+//        let paths = (NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString).stringByAppendingPathComponent("customDirectory")
+//        if fileManager.fileExistsAtPath(paths){
+//            try! fileManager.removeItemAtPath(paths)
+//        }else{
+//            print("Something wronge.")
+//        }
 //    }
 }
