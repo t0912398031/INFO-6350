@@ -11,9 +11,13 @@ import CoreData
 
 class TableViewController: UIViewController, UITableViewDelegate{
     
-//    @IBAction func test(_ sender: Any) {
-//        print(getVehicle(id: "2"))
-//    }
+    @IBAction func test(_ sender: Any) {
+        createVehicle()
+        getVehicles()
+
+        tableView.reloadData()
+        save()
+    }
 //    @IBAction func addVehicle(_ sender: UIBarButtonItem) {
 //        createVehicle()
 //        getVehicles()
@@ -26,16 +30,14 @@ class TableViewController: UIViewController, UITableViewDelegate{
     
     @IBOutlet weak var tableView: UITableView!
 
-//    var departments = [Department]()
     var department1 : Department?
-
-//    var vehicles = [Vehicle]()
     var vehicles: [NSManagedObject] = []
     var filteredVehicles: [NSManagedObject] = []
     
     var maxid = 0
-//    var resultSearchController = UISearchController()
     let searchController = UISearchController(searchResultsController: nil)
+    
+    var pickedImageProduct = UIImage()
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,6 +52,8 @@ class TableViewController: UIViewController, UITableViewDelegate{
  
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        initializeImgInPhotoLibrary()
 //        resetAllRecords(in: "Vehicle")
 //        resetAllRecords(in: "Department")
 
@@ -65,21 +69,10 @@ class TableViewController: UIViewController, UITableViewDelegate{
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-//        self.resultSearchController = ({
-//            let controller = UISearchController(searchResultsController: nil)
-//            controller.searchResultsUpdater = self
-//            controller.dimsBackgroundDuringPresentation = false
-//            controller.searchBar.sizeToFit()
-//            controller.searchBar.barStyle = UIBarStyle.black
-//            controller.searchBar.barTintColor = UIColor.white
-//            controller.searchBar.backgroundColor = UIColor.clear
-//            tableView.tableHeaderView = controller.searchBar
-//            return controller
-//        })()
-//
+
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search Candies"
+        searchController.searchBar.placeholder = "Search by Type"
         searchController.hidesNavigationBarDuringPresentation = false
 //        navigationItem.searchController = searchController
         navigationItem.titleView = searchController.searchBar
@@ -97,13 +90,15 @@ class TableViewController: UIViewController, UITableViewDelegate{
     //        return department1
     //    }
     
-    // MARK: Get Context
-    
-//    func getContext () -> NSManagedObjectContext {
-//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//        return appDelegate.persistentContainer.viewContext
-//    }
-    
+    func initializeImgInPhotoLibrary(){
+        UIImageWriteToSavedPhotosAlbum(UIImage(named: "2016 Lamborghini Huracan LP610-4 Spyder")!, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+        UIImageWriteToSavedPhotosAlbum(UIImage(named: "2017-Lamborghini-Huracan")!, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+        UIImageWriteToSavedPhotosAlbum(UIImage(named: "2018-lamborghini-huracan-performante")!, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+        UIImageWriteToSavedPhotosAlbum(UIImage(named: "huracan-rwd")!, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+        UIImageWriteToSavedPhotosAlbum(UIImage(named: "Lamborghini Huracan Performante")!, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+        UIImageWriteToSavedPhotosAlbum(UIImage(named: "A")!, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+        UIImageWriteToSavedPhotosAlbum(UIImage(named: "2017-Lamborghini-Aventador")!, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+    }
     func save() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         appDelegate.saveContext()
@@ -123,23 +118,6 @@ class TableViewController: UIViewController, UITableViewDelegate{
         }
         
     }
-//    func resetAllRecords(in entity : String) // entity = Your_Entity_Name
-//    {
-//
-//        let context = ( UIApplication.shared.delegate as! AppDelegate ).persistentContainer.viewContext
-//        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
-//        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
-//        do
-//        {
-//            try context.execute(deleteRequest)
-//            try context.save()
-//        }
-//        catch
-//        {
-//            print ("There was an error")
-//        }
-//    }
-    
 //    func clearCoreDataStore() {
 //        let delegate = UIApplication.shared.delegate as! AppDelegate
 //        let context = delegate.persistentContainer.viewContext
@@ -159,30 +137,6 @@ class TableViewController: UIViewController, UITableViewDelegate{
 //            }
 //        }
 //    }
-    
-    
-    //    func deleteRecords() -> Void {
-    //        let moc = getContext()
-    //        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Department")
-    //
-    //        let result = try? moc.fetch(fetchRequest)
-    //        let resultData = result as! [Department]
-    //
-    //        for object in resultData {
-    //            moc.delete(object)
-    //        }
-    //
-    //        do {
-    //            try moc.save()
-    //            print("saved!")
-    //        } catch let error as NSError  {
-    //            print("Could not save \(error), \(error.userInfo)")
-    //        } catch {
-    //
-    //        }
-    //
-    //    }
-    
     
     func createDepartment(){
 //        let context = ( UIApplication.shared.delegate as! AppDelegate ).persistentContainer.viewContext
@@ -219,37 +173,45 @@ class TableViewController: UIViewController, UITableViewDelegate{
         vehicle1.model = "Lamborghini"
         vehicle1.type = "Coupe"
         vehicle1.year = date1!
+        vehicle1.photo = "2016 Lamborghini Huracan LP610-4 Spyder"
         vehicle1.id = Int32(maxid)
         vehicle1.department = department1
         department1?.addToVehicles(vehicle1)
         maxid += 1
+        saveImg(vehicle1.photo!, UIImage(named: vehicle1.photo!)!)
         
         let vehicle2 = Vehicle(context: context)
         vehicle2.model = "Porsche"
         vehicle2.type = "Coup"
         vehicle2.year = date2!
+        vehicle2.photo = "2017-Lamborghini-Huracan"
         vehicle2.id = Int32(maxid)
         vehicle2.department = department1
         department1?.addToVehicles(vehicle2)
         maxid += 1
+        saveImg(vehicle2.photo!, UIImage(named: vehicle2.photo!)!)
         
         let vehicle3 = Vehicle(context: context)
         vehicle3.model = "Ferrari"
         vehicle3.type = "Cou"
         vehicle3.year = date3!
+        vehicle3.photo = "2018-lamborghini-huracan-performante"
         vehicle3.id = Int32(maxid)
         vehicle3.department = department1
         department1?.addToVehicles(vehicle3)
         maxid += 1
+        saveImg(vehicle3.photo!, UIImage(named: vehicle3.photo!)!)
         
         let vehicle4 = Vehicle(context: context)
         vehicle4.model = "Mercedes-Benz"
         vehicle4.type = "Co"
         vehicle4.year = date4!
+        vehicle4.photo = "huracan-rwd"
         vehicle4.id = Int32(maxid)
         vehicle4.department = department1
         department1?.addToVehicles(vehicle4)
         maxid += 1
+        saveImg(vehicle4.photo!, UIImage(named: vehicle4.photo!)!)
         
         tableView.reloadData()
     }
@@ -262,12 +224,14 @@ class TableViewController: UIViewController, UITableViewDelegate{
         dateformatter.dateFormat = "yyyy"
         let date1 = dateformatter.date(from: "2016") as NSDate?
         vehicle1.model = "Lamborghini"
+        vehicle1.photo = "2017-Lamborghini-Aventador"
         vehicle1.type = "Coupe"
         vehicle1.year = date1!
         vehicle1.id = Int32(maxid)
         vehicle1.department = department1
         department1?.addToVehicles(vehicle1)
 //        department1?.vehicles?.forEach({print($0)})
+        saveImg(vehicle1.photo!, UIImage(named: vehicle1.photo!)!)
         maxid += 1
 
     }
@@ -278,10 +242,6 @@ class TableViewController: UIViewController, UITableViewDelegate{
             return a.id < b.id
         }
 //        vehicles.forEach({print($0.model)})
-        
-        
-        
-    
         
 //        let context = getContext()
 //        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "Vehicle")
@@ -371,22 +331,6 @@ class TableViewController: UIViewController, UITableViewDelegate{
     }
     */
     
-    
-    func searchBarIsEmpty() -> Bool {
-        // Returns true if the text is empty or nil
-        return searchController.searchBar.text?.isEmpty ?? true
-    }
-    
-    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
-        filteredVehicles = vehicles.filter({( v : NSManagedObject) -> Bool in
-//            return candy.name.lowercased().contains(searchText.lowercased())
-            return String((v.value(forKey: "id") as? Int)!).lowercased().contains(searchText.lowercased())
-            
-        })
-        
-        tableView.reloadData()
-    }
-
 }
 
 
@@ -415,11 +359,12 @@ extension TableViewController: UITableViewDataSource {
         dateformatter.dateFormat = "yyyy"
         let year = dateformatter.string(from: vehicle.value(forKeyPath: "year") as! Date)
 
-//        cell.img.image = UIImage(named: vehicle.value(forKeyPath: "photo") as? String ?? "")
-//        cell.label1.text = vehicle.value(forKeyPath: "model") as? String
+//        cell.img.image = UIImage(named: vehicle.value(forKey: "photo") as? String ?? "")
+        cell.img.image = readImg(vehicle.value(forKey: "photo") as? String ?? "")
         cell.label1.text = String((vehicle.value(forKey: "id") as? Int)!)
         cell.label2.text = vehicle.value(forKeyPath: "type") as? String
         cell.label3.text = "\(year)"
+        cell.label4.text = vehicle.value(forKeyPath: "model") as? String
 
 
 //        let dateformatter = DateFormatter()
@@ -535,17 +480,22 @@ extension TableViewController: UITableViewDataSource {
 extension TableViewController: UISearchResultsUpdating {
     // MARK: - UISearchResultsUpdating Delegate
     func updateSearchResults(for searchController: UISearchController) {
-//        filteredVehicles.removeAll(keepingCapacity: false)
-//
-//        fetchRequest.predicate = NSPredicate(format: "id = %@", id)
-//
-//        let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", searchController.searchBar.text)
-//        let array = (vehicles as NSArray).filteredArrayUsingPredicate(searchPredicate)
-//        filteredVehicles = array as! [String]
-//        tableView.reloadData()
-//
-//
         filterContentForSearchText(searchController.searchBar.text!)
+    }
+    
+    func searchBarIsEmpty() -> Bool {
+        // Returns true if the text is empty or nil
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+        filteredVehicles = vehicles.filter({( v : NSManagedObject) -> Bool in
+//            return String((v.value(forKey: "id") as? Int)!).lowercased().contains(searchText.lowercased())
+            return String((v.value(forKey: "type") as? String)!).lowercased().contains(searchText.lowercased())
+            
+        })
+        
+        tableView.reloadData()
     }
 }
 
@@ -564,4 +514,21 @@ extension TableViewController: UISearchBarDelegate {
 //        searchController.searchBar.text = nil
 //        searchBar.resignFirstResponder()
 //    }
+}
+
+extension TableViewController{
+    @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            // we got back an error!
+            showAlertWith(title: "Save error", message: error.localizedDescription)
+        } else {
+            showAlertWith(title: "Saved!", message: "Your image has been saved to your photos.")
+        }
+    }
+    
+    func showAlertWith(title: String, message: String){
+        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        present(ac, animated: true)
+    }
 }

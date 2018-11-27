@@ -11,13 +11,34 @@ import UIKit
 class AddVehicleViewController: UIViewController {
 
     @IBAction func browse(_ sender: UIButton) {
-//        print(getDirectoryPath())
-//        saveImageDocumentDirectory()
-saveImg("789")
+
+//saveImg("333", pickedImageProduct)
+        
+    
+        UIImageWriteToSavedPhotosAlbum(pickedImageProduct, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
     }
     @IBAction func read(_ sender: UIButton) {
-        readImg("123")
+        img.image = readImg("333")
     }
+    
+    
+    @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            // we got back an error!
+            showAlertWith(title: "Save error", message: error.localizedDescription)
+        } else {
+            showAlertWith(title: "Saved!", message: "Your image has been saved to your photos.")
+        }
+    }
+    
+    func showAlertWith(title: String, message: String){
+        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        present(ac, animated: true)
+    }
+    
+    
+    
     @IBOutlet weak var txt1: UITextField!
     @IBOutlet weak var txt2: UITextField!
     @IBOutlet weak var txt3: UITextField!
@@ -27,19 +48,6 @@ saveImg("789")
     @IBOutlet weak var txt7: UITextField!
     @IBOutlet weak var txt8: UITextField!
     @IBOutlet weak var img: UIImageView!
-    
-//    @IBAction func camera(_ sender: UIButton) {
-//        imagePicker.delegate = self
-//        imagePicker.sourceType = UIImagePickerController.SourceType.camera
-//        self.present(imagePicker, animated: true, completion: nil)
-//    }
-//    }
-//    @IBAction func gallery(_ sender: UIButton) {
-//        imagePicker.delegate = self
-//        imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
-//        self.present(imagePicker, animated: true, completion: nil)
-//    }
-    
     
     var department: Department!
     var maxid = 0
@@ -51,7 +59,6 @@ saveImg("789")
         super.viewDidLoad()
         configureTapGesture()
         print(department)
-
         // Do any additional setup after loading the view.
     }
 
@@ -74,7 +81,8 @@ saveImg("789")
         guard let d5 = Double(txt5.text!) else{alert.show(); return}
         //        let d5 = NSString(string: textField5.text!).doubleValue
         guard let i6 = Int(txt6.text!) else{alert.show(); return}
-
+        guard pickedImageProduct.size.width != 0 else{print("no img select"); return}
+        
         let dateformatter = DateFormatter()
         dateformatter.dateFormat = "yyyy"
 
@@ -97,6 +105,7 @@ saveImg("789")
         //        department1?.vehicles?.forEach({print($0)})
         maxid += 1
         
+        saveImg(vehicle1.photo!, pickedImageProduct)
         
         
 //        let vehicle1 = Vehicle(txt1.text!, d2, txt3.text!, txt4.text!, d5, i6, txt7.text!, year!)
@@ -110,37 +119,6 @@ saveImg("789")
         txt7.text = ""
         txt8.text = ""
     }
-    //    @IBAction func Add(_ sender: UIButton) {
-//        let alert = UIAlertController(title: "Alert", message: "Please check your typing", preferredStyle: UIAlertController.Style.alert)
-//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-//        //verify textFields
-//        if !txt1.text!.isAlpha(ignoreDiacritics: true) { alert.show(); return}
-//        if !txt3.text!.isAlpha(ignoreDiacritics: true) { alert.show(); return}
-//        if !txt4.text!.isAlpha(ignoreDiacritics: true) { alert.show(); return}
-//        if !txt7.text!.isAlpha(ignoreDiacritics: true) { alert.show(); return}
-//        guard txt8.text!.count == 4 else{alert.show(); return}
-//
-//        guard let d2 = Double(txt2.text!) else{alert.show(); return}
-//        guard let d5 = Double(txt5.text!) else{alert.show(); return}
-//        //        let d5 = NSString(string: textField5.text!).doubleValue
-//        guard let i6 = Int(txt6.text!) else{alert.show(); return}
-//
-//        let dateformatter = DateFormatter()
-//        dateformatter.dateFormat = "yyyy"
-//
-//        let year = dateformatter.date(from: txt8.text!)
-//
-//        let vehicle1 = Vehicle(txt1.text!, d2, txt3.text!, txt4.text!, d5, i6, txt7.text!, year!)
-//        department.Add(vehicle: vehicle1)
-//        txt1.text = ""
-//        txt2.text = ""
-//        txt3.text = ""
-//        txt4.text = ""
-//        txt5.text = ""
-//        txt6.text = ""
-//        txt7.text = ""
-//        txt8.text = ""
-//    }
     
     private func configureTapGesture(){
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(AddVehicleViewController.handleTap))
@@ -169,7 +147,14 @@ extension AddVehicleViewController: UITextFieldDelegate{
     }
 }
 
+
+
+
+
+
 extension AddVehicleViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    
     
     @IBAction func camera(_ sender: UIButton) {
         imagePicker.delegate = self
@@ -235,34 +220,34 @@ extension AddVehicleViewController: UIImagePickerControllerDelegate, UINavigatio
 
 
 extension AddVehicleViewController {
-    func saveImg(_ fileName: String){
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        // choose a name for your image
-//        let fileName = name
-        // create the destination file url to save your image
-        let fileURL = documentsDirectory.appendingPathComponent(fileName)
-        // get your UIImage jpeg data representation and check if the destination file url already exists
-        if let data = pickedImageProduct.jpegData(compressionQuality: 1.0),
-            !FileManager.default.fileExists(atPath: fileURL.path) {
-            do {
-                // writes the image data to disk
-                try data.write(to: fileURL)
-                print("file saved")
-            } catch {
-                print("error saving file:", error)
-            }
-        }
-    }
-    
-    func readImg(_ fileName: String){
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let fileURL = documentsDirectory.appendingPathComponent(fileName)
-        if FileManager.default.fileExists(atPath: fileURL.path){
-            img.image = UIImage(contentsOfFile: fileURL.path)
-        }else{
-            print("No Image")
-        }
-    }
+//    func saveImg(_ fileName: String, _ pickedImageProduct: UIImage){
+//        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+//        // choose a name for your image
+////        let fileName = name
+//        // create the destination file url to save your image
+//        let fileURL = documentsDirectory.appendingPathComponent(fileName)
+//        // get your UIImage jpeg data representation and check if the destination file url already exists
+//        if let data = pickedImageProduct.jpegData(compressionQuality: 1.0),
+//            !FileManager.default.fileExists(atPath: fileURL.path) {
+//            do {
+//                // writes the image data to disk
+//                try data.write(to: fileURL)
+//                print("file saved")
+//            } catch {
+//                print("error saving file:", error)
+//            }
+//        }
+//    }
+//    
+//    func readImg(_ fileName: String){
+//        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+//        let fileURL = documentsDirectory.appendingPathComponent(fileName)
+//        if FileManager.default.fileExists(atPath: fileURL.path){
+//            img.image = UIImage(contentsOfFile: fileURL.path)
+//        }else{
+//            print("No Image")
+//        }
+//    }
     
 //    func saveImageDocumentDirectory(){
 //        let s = pickedImageProduct.accessibilityIdentifier

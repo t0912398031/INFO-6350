@@ -37,21 +37,28 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wxm-DA-kem">
-                                                    <rect key="frame" x="144" y="11" width="166" height="36"/>
+                                                    <rect key="frame" x="144" y="11" width="30" height="36"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.402285850235645" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Lb-h3-bTG">
+                                                    <rect key="frame" x="182" y="44" width="88" height="34"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Lb-h3-bTG">
-                                                    <rect key="frame" x="144" y="46" width="123" height="34"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y0O-o2-EiN">
+                                                    <rect key="frame" x="182" y="11" width="178" height="36"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c9r-4O-oEs">
-                                                    <rect key="frame" x="275" y="44" width="85" height="36"/>
+                                                    <rect key="frame" x="297" y="43" width="63" height="36"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -64,6 +71,7 @@
                                             <outlet property="label1" destination="wxm-DA-kem" id="gjP-zh-QyL"/>
                                             <outlet property="label2" destination="3Lb-h3-bTG" id="4xa-nO-m52"/>
                                             <outlet property="label3" destination="c9r-4O-oEs" id="Bhz-Fx-BLL"/>
+                                            <outlet property="label4" destination="y0O-o2-EiN" id="Nnn-Bd-Xj9"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -101,10 +109,10 @@
             </objects>
             <point key="canvasLocation" x="925.60000000000002" y="759.67016491754134"/>
         </scene>
-        <!--AddVehicle-->
+        <!--Add Vehicles-->
         <scene sceneID="ZAb-4Y-Xyy">
             <objects>
-                <viewController title="AddVehicle" id="qH7-J7-HrR" customClass="AddVehicleViewController" customModule="Assignment10_library" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Add Vehicles" id="qH7-J7-HrR" customClass="AddVehicleViewController" customModule="Assignment10_library" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bY3-GR-46B"/>
                         <viewControllerLayoutGuide type="bottom" id="EmI-dZ-vff"/>

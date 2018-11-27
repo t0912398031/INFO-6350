@@ -22,6 +22,8 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Would like to access your Camera for image</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>would like to save photo and video to your photo library</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
